@@ -1,33 +1,101 @@
- 
+# Day 3 Exploring the Dark
 
+## Exploring the Dark
 
-> Open this page at [https://codeninjassummercamps.github.io/day-3-exploring-the-dark/](https://codeninjassummercamps.github.io/day-3-exploring-the-dark/)
+Show what you know about conditionals, and learn some new things about boolean logic! Teach the agent how to place torches for you, but only when there isn't already a block placed there.
 
-## Use as Extension
+## Step 1
 
-This repository can be added as an **extension** in MakeCode.
+First, grab a new ``||player.on chat command||`` block or edit the one that is already there to make a "light" command.
 
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **New Project**
-* click on **Extensions** under the gearwheel menu
-* search for **https://github.com/codeninjassummercamps/day-3-exploring-the-dark** and import
+```blocks
+player.onChat("light", function () {
+    
+})
+```
 
-## Edit this project ![Build status badge](https://github.com/codeninjassummercamps/day-3-exploring-the-dark/workflows/MakeCode/badge.svg)
+## Step 2
 
-To edit this repository in MakeCode.
+The first thing the agent needs to do is move to the player, then take a step back. You'll need 2 blocks from the ``||agent||`` section to do this.
 
-* open [https://arcade.makecode.com/](https://arcade.makecode.com/)
-* click on **Import** then click on **Import URL**
-* paste **https://github.com/codeninjassummercamps/day-3-exploring-the-dark** and click import
+```blocks
+player.onChat("light", function () {
+    agent.teleportToPlayer()
+    agent.move(BACK, 1)
+})
+```
 
-## Blocks preview
+## Step 3
 
-This image shows the blocks code from the last commit in master.
-This image may take a few minutes to refresh.
+Can the agent place torches if it doesn't have any? No! Add a block that will give the agent some torches.
 
-![A rendered view of the blocks](https://github.com/codeninjassummercamps/day-3-exploring-the-dark/raw/master/.github/makecode/blocks.png)
+```blocks
+player.onChat("light", function () {
+    agent.teleportToPlayer()
+    agent.move(BACK, 1)
+    agent.setItem(TORCH, 64, 1)
+})
+```
 
-#### Metadata (used for search, rendering)
+## Step 4
 
-* for PXT/arcade
-<script src="https://makecode.com/gh-pages-embed.js"></script><script>makeCodeRender("{{ site.makecode.home_url }}", "{{ site.github.owner_name }}/{{ site.github.repository_name }}");</script>
+Now comes the conditional! The agent will place a torch, but only some of the time, when certain conditions are met.
+
+```blocks
+player.onChat("light", function () {
+    agent.teleportToPlayer()
+    agent.move(BACK, 1)
+    agent.setItem(TORCH, 64, 1)
+    if(and){
+    }
+})
+```
+
+## Step 5
+
+We need to make sure there is not already a block in the way before we can place a block, so we will need a new block in our ``||logic.if||``. Try to find the ``||logic.not||`` block to put in the condition! Then, add ``||agent.agent detect block||`` inside the ``||logic.not||`` block.
+
+```blocks
+player.onChat("light", function () {
+    agent.teleportToPlayer()
+    agent.move(BACK, 1)
+    agent.setItem(TORCH, 64, 1)
+    if(!agent.detect(AgentDetection.block, FORWARD)){
+    }
+})
+```
+
+## Finished Code
+
+Good job listening to Sensei, you can check your code with the hint. Now try the bonus!
+
+```blocks
+let going = 0
+player.onChat("maze", function () {
+    agent.teleport(world(-7, 0, -3), NORTH)
+    going = 1
+})
+loops.forever(function(){
+    if(going == 1){
+        if(agent.detect(AgentDetection.Block, FORWARD)){
+            agent.turn(TurnDirection.Right)
+        }else{
+            agent.move(FORWARD, 1)
+        }
+    }
+})
+```
+
+## Bonus
+
+The agent can get into the maze and get to the center, but what happens in the center? First, try making a way to stop the agent from moving using a chat command. Once you've tried that, what can you do to teach the agent to get back out of the maze? This is a really tricky challenge, but if there is time, your Senseis can show you how to do it!
+
+```blocks
+player.onChat("stop", function () {
+    going = 0
+})
+```
+
+## Activity Complete!
+
+You did it! You explored new conditionals and learned about the ``||logic.else||`` part of a conditional! 
