@@ -37,13 +37,13 @@ player.onChat("light", function () {
 
 ## Step 4
 
-Now comes the conditional! The agent will place a light, but only some of the time, when certain conditions are met.
+Now comes the conditional! The agent will place a light, but only some of the time, when certain conditions are met. Add the block that will do this!
 
 ```blocks
 player.onChat("light", function () {
     agent.teleportToPlayer()
     agent.setItem(GLOWSTONE, 64, 1)
-    if(){
+    if(true){
     }
 })
 ```
